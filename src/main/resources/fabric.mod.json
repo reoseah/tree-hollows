@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "tree-hollows",
+	"version": "${version}",
+	"name": "Tree Hollows",
+	"description": "",
+	"authors": [
+		"Reoseah"
+	],
+	"contact": {},
+	"license": "MIT",
+	"icon": "assets/tree-hollows/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"com.github.reoseah.treehollows.client.TreeHollowsClient"
+		],
+		"main": [
+			"com.github.reoseah.treehollows.TreeHollows"
+		]
+	},
+	"mixins": [
+		"tree-hollows.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.13.1",
+		"fabric": "*",
+		"minecraft": "1.18.1"
+	}
+}

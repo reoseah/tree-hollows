@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"facing=east": {
+			"model": "treehollows:block/jungle_hollow",
+			"y": 90
+		},
+		"facing=north": {
+			"model": "treehollows:block/jungle_hollow"
+		},
+		"facing=south": {
+			"model": "treehollows:block/jungle_hollow",
+			"y": 180
+		},
+		"facing=west": {
+			"model": "treehollows:block/jungle_hollow",
+			"y": 270
+		}
+	}
+}

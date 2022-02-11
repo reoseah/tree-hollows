@@ -3,7 +3,6 @@ package com.github.reoseah.treehollows;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
@@ -17,15 +16,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
-import java.util.prefs.InvalidPreferencesFormatException;
-import java.util.prefs.Preferences;
 
 public class TreeHollows implements ModInitializer {
 	public static final String MOD_ID = "treehollows";
@@ -40,10 +32,13 @@ public class TreeHollows implements ModInitializer {
 	public static final BlockEntityType<TreeHollowBlockEntity> BLOCK_ENTITY_TYPE = FabricBlockEntityTypeBuilder.create(TreeHollowBlockEntity::new, OAK_HOLLOW, SPRUCE_HOLLOW, BIRCH_HOLLOW, JUNGLE_HOLLOW, ACACIA_HOLLOW, DARK_OAK_HOLLOW).build();
 
 	public static final TreeDecoratorType<TreeHollowTreeDecorator> TREE_DECORATOR_TYPE = new TreeDecoratorType<>(TreeHollowTreeDecorator.CODEC);
-
 	public static final Identifier LOOT_TABLE_ID = new Identifier(MOD_ID, "chests/tree_hollow");
 	public static final Map<Block, Block> TREE_HOLLOWS_MAP = new HashMap<>();
 	public static final float CHANCE = 0.05F; // TODO load from config
+
+	public static <T> T register(Registry<? super T> registry, String id, T entry) {
+		return Registry.register(registry, new Identifier(MOD_ID, id), entry);
+	}
 
 	@Override
 	public void onInitialize() {
@@ -73,7 +68,5 @@ public class TreeHollows implements ModInitializer {
 		TREE_HOLLOWS_MAP.put(Blocks.DARK_OAK_LOG, DARK_OAK_HOLLOW);
 	}
 
-	public static <T> T register(Registry<? super T> registry, String id, T entry) {
-		return Registry.register(registry, new Identifier(MOD_ID, id), entry);
-	}
+
 }

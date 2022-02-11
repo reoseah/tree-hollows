@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "treehollows:oak_hollow",
+    "treehollows:spruce_hollow",
+    "treehollows:birch_hollow",
+    "treehollows:jungle_hollow",
+    "treehollows:acacia_hollow",
+    "treehollows:dark_oak_hollow"
+  ]
+}

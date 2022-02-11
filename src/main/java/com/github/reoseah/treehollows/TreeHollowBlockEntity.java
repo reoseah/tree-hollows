@@ -15,7 +15,7 @@ public class TreeHollowBlockEntity extends LootableContainerBlockEntity {
 	protected final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(9, ItemStack.EMPTY);
 
 	public TreeHollowBlockEntity(BlockPos pos, BlockState state) {
-		super(TreeHollows.TREE_HOLLOW, pos, state);
+		super(TreeHollows.BLOCK_ENTITY_TYPE, pos, state);
 	}
 
 	@Override

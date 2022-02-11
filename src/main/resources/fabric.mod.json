@@ -19,6 +19,7 @@
 			"com.github.reoseah.treehollows.TreeHollows"
 		]
 	},
+	"accessWidener": "tree-hollows.accesswidener",
 	"mixins": [
 		"tree-hollows.mixins.json"
 	],

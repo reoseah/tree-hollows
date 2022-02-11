@@ -41,7 +41,7 @@ public class TreeFeatureConfigMixin {
 		}
 		Block log = this.trunkProvider.getBlockState(new Random(), BlockPos.ORIGIN).getBlock();
 		if (TreeHollows.TREE_HOLLOWS_MAP.containsKey(log)) {
-			TreeDecorator treeHollow = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(log), 0.05F);
+			TreeDecorator treeHollow = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(log), TreeHollows.CHANCE);
 			this.decorators = new ImmutableList.Builder<TreeDecorator>().addAll(this.decorators).add(treeHollow).build();
 		}
 	}

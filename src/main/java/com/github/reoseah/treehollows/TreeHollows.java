@@ -3,6 +3,7 @@ package com.github.reoseah.treehollows;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
@@ -16,8 +17,15 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
+import java.util.prefs.InvalidPreferencesFormatException;
+import java.util.prefs.Preferences;
 
 public class TreeHollows implements ModInitializer {
 	public static final String MOD_ID = "treehollows";
@@ -35,6 +43,7 @@ public class TreeHollows implements ModInitializer {
 
 	public static final Identifier LOOT_TABLE_ID = new Identifier(MOD_ID, "chests/tree_hollow");
 	public static final Map<Block, Block> TREE_HOLLOWS_MAP = new HashMap<>();
+	public static final float CHANCE = 0.05F; // TODO load from config
 
 	@Override
 	public void onInitialize() {

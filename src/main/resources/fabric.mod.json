@@ -12,9 +12,6 @@
 	"icon": "assets/treehollows/icon.png",
 	"environment": "*",
 	"entrypoints": {
-		"client": [
-			"com.github.reoseah.treehollows.client.TreeHollowsClient"
-		],
 		"main": [
 			"com.github.reoseah.treehollows.TreeHollows"
 		]

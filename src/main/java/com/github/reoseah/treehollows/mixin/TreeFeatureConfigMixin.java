@@ -36,7 +36,7 @@ public class TreeFeatureConfigMixin {
 	@Inject(at = @At("RETURN"), method = "<init>(Lnet/minecraft/world/gen/stateprovider/BlockStateProvider;Lnet/minecraft/world/gen/trunk/TrunkPlacer;Lnet/minecraft/world/gen/stateprovider/BlockStateProvider;Lnet/minecraft/world/gen/foliage/FoliagePlacer;Lnet/minecraft/world/gen/stateprovider/BlockStateProvider;Lnet/minecraft/world/gen/feature/size/FeatureSize;Ljava/util/List;ZZ)V")
 	private void addTreeHollowsDecorators(BlockStateProvider trunkProvider, TrunkPlacer trunkPlacer, BlockStateProvider foliageProvider, FoliagePlacer foliagePlacer, BlockStateProvider dirtProvider, FeatureSize minimumSize, List<TreeDecorator> decorators, boolean ignoreVines, boolean forceDirt, CallbackInfo ci) {
 		if (this.decorators.stream().anyMatch(decorator -> decorator instanceof TreeHollowTreeDecorator) // skip anything if it already has tree hollow
-				|| !(this.trunkProvider instanceof SimpleBlockStateProvider)) { // skip anything fancy
+				|| !(this.trunkProvider instanceof SimpleBlockStateProvider)) { // skip anything with fancy logs
 			return;
 		}
 		Block log = this.trunkProvider.getBlockState(new Random(), BlockPos.ORIGIN).getBlock();

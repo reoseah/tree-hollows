@@ -7,7 +7,9 @@
 	"authors": [
 		"Reoseah"
 	],
-	"contact": {},
+	"contact": {
+		"sources": "https://github.com/Reoseah/tree-hollows"
+	},
 	"license": "Unlicense",
 	"icon": "assets/treehollows/icon.png",
 	"environment": "*",

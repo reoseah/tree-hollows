@@ -10,12 +10,7 @@
         {
           "type": "minecraft:item",
           "weight": 10,
-          "name": "minecraft:stick",
-          "functions": [
-            {
-              "function": "minecraft:set_count"
-            }
-          ]
+          "name": "minecraft:stick"
         },
         {
           "type": "minecraft:item",

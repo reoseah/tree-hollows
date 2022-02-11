@@ -1,15 +1,15 @@
 {
 	"schemaVersion": 1,
-	"id": "tree-hollows",
+	"id": "treehollows",
 	"version": "${version}",
 	"name": "Tree Hollows",
-	"description": "",
+	"description": "Free loot boxes in the forest near you!",
 	"authors": [
 		"Reoseah"
 	],
 	"contact": {},
-	"license": "MIT",
-	"icon": "assets/tree-hollows/icon.png",
+	"license": "Unlicense",
+	"icon": "assets/treehollows/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"client": [

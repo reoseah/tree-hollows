@@ -15,12 +15,18 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TreeHollows implements ModInitializer {
 	public static final String MOD_ID = "treehollows";
+	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+
+	public static final Identifier LOOT_TABLE_ID = new Identifier(MOD_ID, "chests/tree_hollow");
+	public static final Map<Block, Block> TREE_HOLLOWS_MAP = new HashMap<>();
 
 	public static final Block OAK_HOLLOW = new TreeHollowBlock(FabricBlockSettings.of(Material.WOOD, MapColor.OAK_TAN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
 	public static final Block SPRUCE_HOLLOW = new TreeHollowBlock(FabricBlockSettings.of(Material.WOOD, MapColor.SPRUCE_BROWN).strength(2.0f).sounds(BlockSoundGroup.WOOD));
@@ -32,16 +38,15 @@ public class TreeHollows implements ModInitializer {
 	public static final BlockEntityType<TreeHollowBlockEntity> BLOCK_ENTITY_TYPE = FabricBlockEntityTypeBuilder.create(TreeHollowBlockEntity::new, OAK_HOLLOW, SPRUCE_HOLLOW, BIRCH_HOLLOW, JUNGLE_HOLLOW, ACACIA_HOLLOW, DARK_OAK_HOLLOW).build();
 
 	public static final TreeDecoratorType<TreeHollowTreeDecorator> TREE_DECORATOR_TYPE = new TreeDecoratorType<>(TreeHollowTreeDecorator.CODEC);
-	public static final Identifier LOOT_TABLE_ID = new Identifier(MOD_ID, "chests/tree_hollow");
-	public static final Map<Block, Block> TREE_HOLLOWS_MAP = new HashMap<>();
-	public static final float CHANCE = 0.05F; // TODO load from config
 
-	public static <T> T register(Registry<? super T> registry, String id, T entry) {
-		return Registry.register(registry, new Identifier(MOD_ID, id), entry);
+	public static <T> T register(Registry<? super T> registry, String name, T entry) {
+		return Registry.register(registry, new Identifier(MOD_ID, name), entry);
 	}
 
 	@Override
 	public void onInitialize() {
+		TreeHollowsConfig.reload();
+
 		register(Registry.BLOCK, "oak_hollow", OAK_HOLLOW);
 		register(Registry.BLOCK, "spruce_hollow", SPRUCE_HOLLOW);
 		register(Registry.BLOCK, "birch_hollow", BIRCH_HOLLOW);
@@ -67,6 +72,4 @@ public class TreeHollows implements ModInitializer {
 		TREE_HOLLOWS_MAP.put(Blocks.ACACIA_LOG, ACACIA_HOLLOW);
 		TREE_HOLLOWS_MAP.put(Blocks.DARK_OAK_LOG, DARK_OAK_HOLLOW);
 	}
-
-
 }

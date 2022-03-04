@@ -2,6 +2,7 @@ package com.github.reoseah.treehollows.mixin;
 
 import com.github.reoseah.treehollows.TreeHollowTreeDecorator;
 import com.github.reoseah.treehollows.TreeHollows;
+import com.github.reoseah.treehollows.TreeHollowsConfig;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
@@ -41,7 +42,7 @@ public class TreeFeatureConfigMixin {
 		}
 		Block log = this.trunkProvider.getBlockState(new Random(), BlockPos.ORIGIN).getBlock();
 		if (TreeHollows.TREE_HOLLOWS_MAP.containsKey(log)) {
-			TreeDecorator treeHollow = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(log), TreeHollows.CHANCE);
+			TreeDecorator treeHollow = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(log), TreeHollowsConfig.instance.getChance());
 			this.decorators = new ImmutableList.Builder<TreeDecorator>().addAll(this.decorators).add(treeHollow).build();
 		}
 	}

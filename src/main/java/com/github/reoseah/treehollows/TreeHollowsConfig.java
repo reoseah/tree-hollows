@@ -23,7 +23,7 @@ public class TreeHollowsConfig {
 
 	public static TreeHollowsConfig instance = new TreeHollowsConfig();
 
-	private final float chance;
+	private float chance;
 
 	public TreeHollowsConfig() {
 		this(0.05F);
@@ -61,5 +61,10 @@ public class TreeHollowsConfig {
 
 	public float getChance() {
 		return this.chance;
+	}
+
+
+	public void setChance(float chance) {
+		this.chance = chance;
 	}
 }

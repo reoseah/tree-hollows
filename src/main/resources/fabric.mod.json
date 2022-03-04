@@ -16,6 +16,9 @@
 	"entrypoints": {
 		"main": [
 			"com.github.reoseah.treehollows.TreeHollows"
+		],
+		"modmenu": [
+			"com.github.reoseah.treehollows.client.TreeHollowsModMenuImpl"
 		]
 	},
 	"accessWidener": "tree-hollows.accesswidener",

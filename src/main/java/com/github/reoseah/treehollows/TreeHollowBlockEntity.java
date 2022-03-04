@@ -3,7 +3,9 @@ package com.github.reoseah.treehollows;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.Generic3x3ContainerScreenHandler;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.text.Text;
@@ -43,5 +45,23 @@ public class TreeHollowBlockEntity extends LootableContainerBlockEntity {
 	@Override
 	public int size() {
 		return 9;
+	}
+
+
+	@Override
+	public void readNbt(NbtCompound nbt) {
+		super.readNbt(nbt);
+		this.stacks.clear();
+		if (!this.deserializeLootTable(nbt)) {
+			Inventories.readNbt(nbt, this.stacks);
+		}
+	}
+
+	@Override
+	protected void writeNbt(NbtCompound nbt) {
+		super.writeNbt(nbt);
+		if (!this.serializeLootTable(nbt)) {
+			Inventories.writeNbt(nbt, this.stacks);
+		}
 	}
 }

@@ -3,7 +3,10 @@ package com.github.reoseah.treehollows;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.MapColor;
+import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -40,24 +43,16 @@ public class TreeHollows implements ModInitializer {
 		return Registry.register(registry, new Identifier(MOD_ID, name), entry);
 	}
 
-	public static Block registerBlock(String name, Block entry) {
-		Block block = Registry.register(Registry.BLOCK, new Identifier(MOD_ID, name), entry);
-		for (BlockState state : block.getStateManager().getStates()) {
-			Block.STATE_IDS.add(state);
-		}
-		return block;
-	}
-
 	@Override
 	public void onInitialize() {
 		TreeHollowsConfig.reload();
 
-		registerBlock("oak_hollow", OAK_HOLLOW);
-		registerBlock("spruce_hollow", SPRUCE_HOLLOW);
-		registerBlock("birch_hollow", BIRCH_HOLLOW);
-		registerBlock("jungle_hollow", JUNGLE_HOLLOW);
-		registerBlock("acacia_hollow", ACACIA_HOLLOW);
-		registerBlock("dark_oak_hollow", DARK_OAK_HOLLOW);
+		register(Registry.BLOCK, "oak_hollow", OAK_HOLLOW);
+		register(Registry.BLOCK, "spruce_hollow", SPRUCE_HOLLOW);
+		register(Registry.BLOCK, "birch_hollow", BIRCH_HOLLOW);
+		register(Registry.BLOCK, "jungle_hollow", JUNGLE_HOLLOW);
+		register(Registry.BLOCK, "acacia_hollow", ACACIA_HOLLOW);
+		register(Registry.BLOCK, "dark_oak_hollow", DARK_OAK_HOLLOW);
 
 		register(Registry.BLOCK_ENTITY_TYPE, "tree_hollow", BLOCK_ENTITY_TYPE);
 

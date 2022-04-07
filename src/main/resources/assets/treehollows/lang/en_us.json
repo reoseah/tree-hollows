@@ -1,11 +1,10 @@
 {
-	"block.treehollows.oak_hollow": "Oak Hollow",
-	"block.treehollows.spruce_hollow": "Spruce Hollow",
-	"block.treehollows.birch_hollow": "Birch Hollow",
-	"block.treehollows.jungle_hollow": "Jungle Hollow",
-	"block.treehollows.acacia_hollow": "Acacia Hollow",
-	"block.treehollows.dark_oak_hollow": "Dark Oak Hollow",
-
-	"options.treehollows.title": "Tree Hollows Options",
-	"options.treehollows.chance": "Generation Chance"
+  "block.treehollows.oak_hollow": "Oak Hollow",
+  "block.treehollows.spruce_hollow": "Spruce Hollow",
+  "block.treehollows.birch_hollow": "Birch Hollow",
+  "block.treehollows.jungle_hollow": "Jungle Hollow",
+  "block.treehollows.acacia_hollow": "Acacia Hollow",
+  "block.treehollows.dark_oak_hollow": "Dark Oak Hollow",
+  "options.treehollows.title": "Tree Hollows Options",
+  "options.treehollows.chance": "Generation Chance"
 }

@@ -1,19 +1,19 @@
 {
-	"variants": {
-		"facing=east": {
-			"model": "treehollows:block/acacia_hollow",
-			"y": 90
-		},
-		"facing=north": {
-			"model": "treehollows:block/acacia_hollow"
-		},
-		"facing=south": {
-			"model": "treehollows:block/acacia_hollow",
-			"y": 180
-		},
-		"facing=west": {
-			"model": "treehollows:block/acacia_hollow",
-			"y": 270
-		}
-	}
+  "variants": {
+    "facing=east": {
+      "model": "treehollows:block/acacia_hollow",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "treehollows:block/acacia_hollow"
+    },
+    "facing=south": {
+      "model": "treehollows:block/acacia_hollow",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "treehollows:block/acacia_hollow",
+      "y": 270
+    }
+  }
 }

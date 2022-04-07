@@ -21,15 +21,18 @@ public class TreeHollowTreeDecorator extends TreeDecorator {
     public static final Codec<TreeHollowTreeDecorator> CODEC = RecordCodecBuilder.create( //
             instance -> instance.group( //
                             Registry.BLOCK.getCodec().fieldOf("block").forGetter(config -> config.block), //
-                            Codec.floatRange(0.0f, 1.0f).fieldOf("chance").forGetter(config -> config.chance)) //
+                            Codec.floatRange(0.0f, 1.0f).fieldOf("world_generation_chance").forGetter(config -> config.worldGenChance), //
+                            Codec.floatRange(0.0f, 1.0f).fieldOf("growth_chance").forGetter(config -> config.worldGenChance)) //
                     .apply(instance, TreeHollowTreeDecorator::new));
 
     protected final Block block;
-    protected final float chance;
+    protected final float worldGenChance;
+    protected final float growthChance;
 
-    public TreeHollowTreeDecorator(Block block, float chance) {
+    public TreeHollowTreeDecorator(Block block, float worldGenChance, float growthChance) {
         this.block = block;
-        this.chance = chance;
+        this.worldGenChance = worldGenChance;
+        this.growthChance = growthChance;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class TreeHollowTreeDecorator extends TreeDecorator {
     @Override
     public void generate(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, Random random, List<BlockPos> logPositions, List<BlockPos> leavesPositions) {
         boolean isWorldGen = world instanceof ChunkRegion;
-        if (random.nextFloat() <= this.chance) {
+        if (random.nextFloat() <= (isWorldGen ? this.worldGenChance : this.growthChance)) {
             int height = 2 + random.nextInt(1);
             if (logPositions.size() <= height) {
                 return;

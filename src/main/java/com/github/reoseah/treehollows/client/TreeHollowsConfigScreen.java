@@ -1,5 +1,6 @@
 package com.github.reoseah.treehollows.client;
 
+import com.github.reoseah.treehollows.TreeHollows;
 import com.github.reoseah.treehollows.TreeHollowsConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -46,7 +47,7 @@ public class TreeHollowsConfigScreen extends Screen {
 		this.list = new ElementListWidget(this.client, this.width, this.height, 32, this.height - 32, 25) {
 			{
 				this.addEntry(new ElementListWidget.Entry() {
-					private final SliderWidget slider = new SliderWidget(width / 2 - 155, 0, 310, 20, LiteralText.EMPTY, TreeHollowsConfig.instance.getChance()) {
+					private final SliderWidget slider = new SliderWidget(width / 2 - 155, 0, 310, 20, LiteralText.EMPTY, TreeHollows.config.getWorldGenerationChance()) {
 						{
 							this.updateMessage();
 						}
@@ -58,7 +59,7 @@ public class TreeHollowsConfigScreen extends Screen {
 
 						@Override
 						protected void applyValue() {
-							TreeHollowsConfig.instance.setChance(Math.round(this.value * 100) / 100F);
+							TreeHollows.config.setWorldGenerationChance(Math.round(this.value * 100) / 100F);
 						}
 					};
 

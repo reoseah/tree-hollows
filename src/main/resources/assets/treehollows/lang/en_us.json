@@ -6,7 +6,9 @@
   "block.treehollows.acacia_hollow": "Acacia Hollow",
   "block.treehollows.dark_oak_hollow": "Dark Oak Hollow",
 
-  "block.treehollows.architects_palette.twisted_hollow": "Twisted Tree Hollow",
+  "block.treehollows.architects_palette.twisted_hollow": "Twisted Hollow",
+
+  "container.treehollows.tree_hollow": "Tree Hollow",
 
   "options.treehollows.title": "Tree Hollows Options",
   "options.treehollows.chance": "Generation Chance"

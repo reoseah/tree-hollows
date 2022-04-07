@@ -2,10 +2,11 @@ package com.github.reoseah.treehollows.mixin;
 
 import com.github.reoseah.treehollows.TreeHollowTreeDecorator;
 import com.github.reoseah.treehollows.TreeHollows;
-import com.github.reoseah.treehollows.TreeHollowsConfig;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.feature.size.FeatureSize;
 import net.minecraft.world.gen.foliage.FoliagePlacer;
@@ -26,24 +27,25 @@ import java.util.Random;
 
 @Mixin(TreeFeatureConfig.class)
 public class TreeFeatureConfigMixin {
-	@Shadow
-	@Final
-	public BlockStateProvider trunkProvider;
-	@Shadow
-	@Final
-	@Mutable
-	public List<TreeDecorator> decorators;
+    @Shadow
+    @Final
+    public BlockStateProvider trunkProvider;
+    @Shadow
+    @Final
+    @Mutable
+    public List<TreeDecorator> decorators;
 
-	@Inject(at = @At("RETURN"), method = "<init>(Lnet/minecraft/world/gen/stateprovider/BlockStateProvider;Lnet/minecraft/world/gen/trunk/TrunkPlacer;Lnet/minecraft/world/gen/stateprovider/BlockStateProvider;Lnet/minecraft/world/gen/foliage/FoliagePlacer;Lnet/minecraft/world/gen/stateprovider/BlockStateProvider;Lnet/minecraft/world/gen/feature/size/FeatureSize;Ljava/util/List;ZZ)V")
-	private void addTreeHollowsDecorators(BlockStateProvider trunkProvider, TrunkPlacer trunkPlacer, BlockStateProvider foliageProvider, FoliagePlacer foliagePlacer, BlockStateProvider dirtProvider, FeatureSize minimumSize, List<TreeDecorator> decorators, boolean ignoreVines, boolean forceDirt, CallbackInfo ci) {
-		if (this.decorators.stream().anyMatch(decorator -> decorator instanceof TreeHollowTreeDecorator) // skip anything if it already has tree hollow
-				|| !(this.trunkProvider instanceof SimpleBlockStateProvider)) { // skip anything with fancy logs
-			return;
-		}
-		Block log = this.trunkProvider.getBlockState(new Random(), BlockPos.ORIGIN).getBlock();
-		if (TreeHollows.TREE_HOLLOWS_MAP.containsKey(log)) {
-			TreeDecorator treeHollow = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(log), TreeHollowsConfig.instance.getChance());
-			this.decorators = new ImmutableList.Builder<TreeDecorator>().addAll(this.decorators).add(treeHollow).build();
-		}
-	}
+    @Inject(at = @At("RETURN"), method = "<init>(Lnet/minecraft/world/gen/stateprovider/BlockStateProvider;Lnet/minecraft/world/gen/trunk/TrunkPlacer;Lnet/minecraft/world/gen/stateprovider/BlockStateProvider;Lnet/minecraft/world/gen/foliage/FoliagePlacer;Lnet/minecraft/world/gen/stateprovider/BlockStateProvider;Lnet/minecraft/world/gen/feature/size/FeatureSize;Ljava/util/List;ZZ)V")
+    private void addTreeHollowsDecorators(BlockStateProvider trunkProvider, TrunkPlacer trunkPlacer, BlockStateProvider foliageProvider, FoliagePlacer foliagePlacer, BlockStateProvider dirtProvider, FeatureSize minimumSize, List<TreeDecorator> decorators, boolean ignoreVines, boolean forceDirt, CallbackInfo ci) {
+        if (this.decorators.stream().anyMatch(decorator -> decorator instanceof TreeHollowTreeDecorator) // skip anything if it already has tree hollow
+                || !(this.trunkProvider instanceof SimpleBlockStateProvider)) { // skip anything with fancy logs
+            return;
+        }
+        Block log = this.trunkProvider.getBlockState(new Random(), BlockPos.ORIGIN).getBlock();
+        Identifier logId = Registry.BLOCK.getId(log);
+        if (TreeHollows.TREE_HOLLOWS_MAP.containsKey(logId)) {
+            TreeDecorator treeHollow = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(logId), TreeHollows.config.getWorldGenerationChance(), TreeHollows.config.getGrowthChance());
+            this.decorators = new ImmutableList.Builder<TreeDecorator>().addAll(this.decorators).add(treeHollow).build();
+        }
+    }
 }

@@ -34,7 +34,7 @@ public class TreeHollowBlockEntity extends LootableContainerBlockEntity {
 
 	@Override
 	protected Text getContainerName() {
-		return new TranslatableText(this.getCachedState().getBlock().getTranslationKey());
+		return new TranslatableText("container.treehollows.tree_hollow");
 	}
 
 	@Override

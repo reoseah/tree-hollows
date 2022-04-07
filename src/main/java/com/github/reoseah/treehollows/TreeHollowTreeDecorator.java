@@ -18,41 +18,42 @@ import java.util.Random;
 import java.util.function.BiConsumer;
 
 public class TreeHollowTreeDecorator extends TreeDecorator {
-	public static final Codec<TreeHollowTreeDecorator> CODEC = RecordCodecBuilder.create( //
-			instance -> instance.group( //
-							Registry.BLOCK.getCodec().fieldOf("block").forGetter(config -> config.block), //
-							Codec.floatRange(0.0f, 1.0f).fieldOf("chance").forGetter(config -> config.chance)) //
-					.apply(instance, TreeHollowTreeDecorator::new));
+    public static final Codec<TreeHollowTreeDecorator> CODEC = RecordCodecBuilder.create( //
+            instance -> instance.group( //
+                            Registry.BLOCK.getCodec().fieldOf("block").forGetter(config -> config.block), //
+                            Codec.floatRange(0.0f, 1.0f).fieldOf("chance").forGetter(config -> config.chance)) //
+                    .apply(instance, TreeHollowTreeDecorator::new));
 
-	protected final Block block;
-	protected final float chance;
+    protected final Block block;
+    protected final float chance;
 
-	public TreeHollowTreeDecorator(Block block, float chance) {
-		this.block = block;
-		this.chance = chance;
-	}
+    public TreeHollowTreeDecorator(Block block, float chance) {
+        this.block = block;
+        this.chance = chance;
+    }
 
-	@Override
-	protected TreeDecoratorType<?> getType() {
-		return TreeHollows.TREE_DECORATOR_TYPE;
-	}
+    @Override
+    protected TreeDecoratorType<?> getType() {
+        return TreeHollows.TREE_DECORATOR_TYPE;
+    }
 
-	@Override
-	public void generate(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, Random random, List<BlockPos> logPositions, List<BlockPos> leavesPositions) {
-		// only add tree hollows during initial world generation
-		if (world instanceof ChunkRegion) {
-			if (random.nextFloat() <= this.chance) {
-				int height = 2 + random.nextInt(1);
-				if (logPositions.size() <= height) {
-					return;
-				}
-				// log positions are sorted by Y coordinate
-				BlockPos pos = logPositions.get(height);
-				Direction facing = Direction.fromHorizontal(random.nextInt(4));
+    @Override
+    public void generate(TestableWorld world, BiConsumer<BlockPos, BlockState> replacer, Random random, List<BlockPos> logPositions, List<BlockPos> leavesPositions) {
+        boolean isWorldGen = world instanceof ChunkRegion;
+        if (random.nextFloat() <= this.chance) {
+            int height = 2 + random.nextInt(1);
+            if (logPositions.size() <= height) {
+                return;
+            }
+            // log positions are sorted by Y coordinate
+            BlockPos pos = logPositions.get(height);
+            Direction facing = Direction.fromHorizontal(random.nextInt(4));
 
-				replacer.accept(pos, this.block.getDefaultState().with(TreeHollowBlock.FACING, facing));
-				LootableContainerBlockEntity.setLootTable((ChunkRegion) world, random, pos, TreeHollows.LOOT_TABLE_ID);
-			}
-		}
-	}
+            replacer.accept(pos, this.block.getDefaultState().with(TreeHollowBlock.FACING, facing));
+
+            if (isWorldGen) {
+                LootableContainerBlockEntity.setLootTable((ChunkRegion) world, random, pos, TreeHollows.LOOT_TABLE_ID);
+            }
+        }
+    }
 }

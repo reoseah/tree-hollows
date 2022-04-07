@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "architects_palette:block/twisted_log_top",
+    "front": "treehollows:block/architects_palette/twisted_hollow",
+    "side": "architects_palette:block/twisted_log"
+  }
+}

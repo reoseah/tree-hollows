@@ -6,6 +6,7 @@
     "treehollows:birch_hollow",
     "treehollows:jungle_hollow",
     "treehollows:acacia_hollow",
-    "treehollows:dark_oak_hollow"
+    "treehollows:dark_oak_hollow",
+    { "id": "treehollows:architects_palette/twisted_hollow", "required": false }
   ]
 }

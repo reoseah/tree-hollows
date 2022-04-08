@@ -11,5 +11,6 @@
   "container.treehollows.tree_hollow": "Tree Hollow",
 
   "options.treehollows.title": "Tree Hollows Options",
-  "options.treehollows.chance": "Generation Chance"
+  "options.treehollows.world_gen_chance": "World Generation Chance",
+  "options.treehollows.growth_chance": "Growing Chance"
 }

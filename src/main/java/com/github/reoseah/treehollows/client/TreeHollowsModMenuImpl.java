@@ -7,8 +7,8 @@ import net.fabricmc.api.Environment;
 
 @Environment(EnvType.CLIENT)
 public class TreeHollowsModMenuImpl implements ModMenuApi {
-	@Override
-	public ConfigScreenFactory<?> getModConfigScreenFactory() {
-		return TreeHollowsConfigScreen::new;
-	}
+    @Override
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
+        return TreeHollowsConfigScreen::new;
+    }
 }

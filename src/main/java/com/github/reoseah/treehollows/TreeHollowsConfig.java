@@ -31,26 +31,29 @@ public class TreeHollowsConfig {
         this.growthChance = growthChance;
     }
 
-    public static void reload() {
+    public static TreeHollowsConfig reload() {
         Path configPath = FabricLoader.getInstance().getConfigDir().resolve("tree-hollows.json");
 
         if (Files.exists(configPath)) {
             try (BufferedReader reader = Files.newBufferedReader(configPath)) {
-                TreeHollows.config = CODEC.decode(JsonOps.INSTANCE, JsonParser.parseReader(reader)).result().map(Pair::getFirst).orElse(new TreeHollowsConfig());
+                return CODEC.decode(JsonOps.INSTANCE, JsonParser.parseReader(reader)).result().map(Pair::getFirst).orElseThrow();
             } catch (Exception e) {
-                TreeHollows.LOGGER.warn("Error while reading config, using defaults", e);
+                TreeHollows.LOGGER.error("Error while reading config, using defaults", e);
+                return new TreeHollowsConfig();
             }
         } else {
             TreeHollows.LOGGER.info("Missing config file, creating default");
-            write();
+            TreeHollowsConfig config = new TreeHollowsConfig();
+            write(config);
+            return config;
         }
     }
 
-    public static void write() {
+    public static void write(TreeHollowsConfig config) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Path configPath = FabricLoader.getInstance().getConfigDir().resolve("tree-hollows.json");
         try (BufferedWriter writer = Files.newBufferedWriter(configPath)) {
-            JsonElement json = CODEC.encode(TreeHollows.config, JsonOps.INSTANCE, new JsonObject()).result().get();
+            JsonElement json = CODEC.encode(config, JsonOps.INSTANCE, new JsonObject()).result().orElseThrow();
             gson.toJson(json, gson.newJsonWriter(writer));
         } catch (Exception e) {
             TreeHollows.LOGGER.warn("Error while writing config", e);
@@ -61,15 +64,15 @@ public class TreeHollowsConfig {
         return this.worldGenerationChance;
     }
 
-    public void setWorldGenerationChance(float value) {
-        this.worldGenerationChance = value;
+    public void setWorldGenerationChance(double value) {
+        this.worldGenerationChance = Math.round(value * 100) / 100F;
     }
 
     public float getGrowthChance() {
         return this.growthChance;
     }
 
-    public void setGrowthChance(float value) {
-        this.growthChance = value;
+    public void setGrowthChance(double value) {
+        this.growthChance = Math.round(value * 100) / 100F;
     }
 }

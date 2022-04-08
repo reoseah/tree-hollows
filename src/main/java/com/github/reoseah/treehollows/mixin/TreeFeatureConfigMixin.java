@@ -2,11 +2,11 @@ package com.github.reoseah.treehollows.mixin;
 
 import com.github.reoseah.treehollows.TreeHollowTreeDecorator;
 import com.github.reoseah.treehollows.TreeHollows;
+import com.github.reoseah.treehollows.compatibility.ArchitectsPaletteHelper;
 import com.google.common.collect.ImmutableList;
+import com.slomaxonical.architectspalette.registry.APBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.feature.size.FeatureSize;
 import net.minecraft.world.gen.foliage.FoliagePlacer;
@@ -42,9 +42,11 @@ public class TreeFeatureConfigMixin {
             return;
         }
         Block log = this.trunkProvider.getBlockState(new Random(), BlockPos.ORIGIN).getBlock();
-        Identifier logId = Registry.BLOCK.getId(log);
-        if (TreeHollows.TREE_HOLLOWS_MAP.containsKey(logId)) {
-            TreeDecorator treeHollow = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(logId), TreeHollows.config.getWorldGenerationChance(), TreeHollows.config.getGrowthChance());
+        if (TreeHollows.TREE_HOLLOWS_MAP.containsKey(log)) {
+            TreeDecorator treeHollow = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(log), TreeHollows.config.getWorldGenerationChance(), TreeHollows.config.getGrowthChance());
+            this.decorators = new ImmutableList.Builder<TreeDecorator>().addAll(this.decorators).add(treeHollow).build();
+        } else if (ArchitectsPaletteHelper.isTwistedLog(log)) {
+            TreeDecorator treeHollow = new TreeHollowTreeDecorator(TreeHollows.TWISTED_HOLLOW, TreeHollows.config.getWorldGenerationChance(), TreeHollows.config.getGrowthChance());
             this.decorators = new ImmutableList.Builder<TreeDecorator>().addAll(this.decorators).add(treeHollow).build();
         }
     }

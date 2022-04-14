@@ -1,78 +1,27 @@
 package com.github.reoseah.treehollows;
 
-import com.google.gson.*;
-import com.mojang.datafixers.util.Pair;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.JsonOps;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.fabricmc.loader.api.FabricLoader;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
 
 public class TreeHollowsConfig {
-    public static final Codec<TreeHollowsConfig> CODEC = RecordCodecBuilder.create( //
-            instance -> instance.group( //
-                            Codec.floatRange(0.0f, 1.0f).fieldOf("world_generation_chance").forGetter(config -> config.worldGenerationChance), //
-                            Codec.floatRange(0.0f, 1.0f).fieldOf("growth_chance").forGetter(config -> config.growthChance)) //
-                    .apply(instance, TreeHollowsConfig::new));
+    public static ForgeConfigSpec COMMON_CONFIG;
 
-    private float worldGenerationChance;
-    private float growthChance;
+    public static final ForgeConfigSpec.DoubleValue WORLD_GENERATION_CHANCE;
+    public static final ForgeConfigSpec.DoubleValue GROWTH_CHANCE;
 
-    public TreeHollowsConfig() {
-        this(0.05F, 0.05F);
+    static {
+        ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
+
+        WORLD_GENERATION_CHANCE = COMMON_BUILDER.comment("How often (in percentage) should Tree Hollows spawn on trees during world generation? Set it to 0.0 to disable this.").defineInRange("worldGenerationChance", 0.05, 0.0, 1.0);
+        GROWTH_CHANCE = COMMON_BUILDER.comment("How often (in percentage) should Tree Hollows spawn on trees when grown from a sapling? Set it to 0.0 to disable this.").defineInRange("growthChance", 0.05, 0.0, 1.0);
+
+        COMMON_CONFIG = COMMON_BUILDER.build();
     }
 
-    public TreeHollowsConfig(float worldGenerationChance, float growthChance) {
-        this.worldGenerationChance = worldGenerationChance;
-        this.growthChance = growthChance;
-    }
+    @SubscribeEvent
+    public static void onLoad(final ModConfigEvent.Loading configEvent) { }
 
-    public static TreeHollowsConfig reload() {
-        Path configPath = FabricLoader.getInstance().getConfigDir().resolve("tree-hollows.json");
-
-        if (Files.exists(configPath)) {
-            try (BufferedReader reader = Files.newBufferedReader(configPath)) {
-                return CODEC.decode(JsonOps.INSTANCE, JsonParser.parseReader(reader)).result().map(Pair::getFirst).orElseThrow();
-            } catch (Exception e) {
-                TreeHollows.LOGGER.error("Error while reading config, using defaults", e);
-                return new TreeHollowsConfig();
-            }
-        } else {
-            TreeHollows.LOGGER.info("Missing config file, creating default");
-            TreeHollowsConfig config = new TreeHollowsConfig();
-            write(config);
-            return config;
-        }
-    }
-
-    public static void write(TreeHollowsConfig config) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Path configPath = FabricLoader.getInstance().getConfigDir().resolve("tree-hollows.json");
-        try (BufferedWriter writer = Files.newBufferedWriter(configPath)) {
-            JsonElement json = CODEC.encode(config, JsonOps.INSTANCE, new JsonObject()).result().orElseThrow();
-            gson.toJson(json, gson.newJsonWriter(writer));
-        } catch (Exception e) {
-            TreeHollows.LOGGER.warn("Error while writing config", e);
-        }
-    }
-
-    public float getWorldGenerationChance() {
-        return this.worldGenerationChance;
-    }
-
-    public void setWorldGenerationChance(double value) {
-        this.worldGenerationChance = Math.round(value * 100) / 100F;
-    }
-
-    public float getGrowthChance() {
-        return this.growthChance;
-    }
-
-    public void setGrowthChance(double value) {
-        this.growthChance = Math.round(value * 100) / 100F;
-    }
+    @SubscribeEvent
+    public static void onReload(final ModConfigEvent.Reloading configEvent) { }
 }

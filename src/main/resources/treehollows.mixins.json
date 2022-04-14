@@ -1,14 +1,11 @@
 {
   "required": true,
-  "minVersion": "0.8",
   "package": "com.github.reoseah.treehollows.mixin",
   "compatibilityLevel": "JAVA_17",
+  "refmap": "treehollows.refmap.json",
   "mixins": [
     "TreeFeatureConfigMixin"
   ],
-  "client": [
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+  "client": [],
+  "minVersion": "0.8.4"
 }

@@ -1,0 +1,10 @@
+archivesBaseName = "architects-palette-support"
+
+dependencies {
+    implementation project(path: ":core", configuration: "namedElements")
+
+    modImplementation "curse.maven:architects-palette-487364:3695654"
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:6.2.57") {
+        transitive = false
+    }
+}

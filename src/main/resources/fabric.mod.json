@@ -13,21 +13,10 @@
   "license": "Unlicense",
   "icon": "assets/treehollows/icon.png",
   "environment": "*",
-  "entrypoints": {
-    "main": [
-      "com.github.reoseah.treehollows.TreeHollows"
-    ],
-    "modmenu": [
-      "com.github.reoseah.treehollows.client.TreeHollowsModMenuImpl"
-    ]
-  },
-  "accessWidener": "tree-hollows.accesswidener",
-  "mixins": [
-    "tree-hollows.mixins.json"
-  ],
   "depends": {
-    "fabricloader": "*",
+    "minecraft": ">=1.18.2",
     "fabric": "*",
-    "minecraft": ">=1.18.2"
+
+    "tree-hollows-core": "*"
   }
 }

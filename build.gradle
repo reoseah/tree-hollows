@@ -69,6 +69,11 @@ dependencies {
 
     implementation project(path: ":architects-palette-support", configuration: "namedElements")
     include project(path: ":architects-palette-support")
+
+    modRuntimeOnly  "curse.maven:architects-palette-487364:3695654"
+    modRuntimeOnly ("me.shedaniel.cloth:cloth-config-fabric:6.2.57") {
+        transitive = false
+    }
 }
 
 jar {

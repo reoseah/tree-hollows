@@ -14,6 +14,11 @@
     "tree-hollows-core": "*",
     "architects_palette": "*"
   },
+  "entrypoints": {
+    "main": [
+      "com.github.reoseah.treehollows.architects_palette.APTreeHollows"
+    ]
+  },
   "mixins": [
   ],
   "custom": {

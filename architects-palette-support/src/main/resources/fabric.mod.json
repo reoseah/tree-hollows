@@ -3,7 +3,7 @@
   "id": "tree-hollows-ap-support",
   "version": "${version}",
   "name": "Architect's Palette Support",
-  "description": "Adds Twisted Tree Hollow",
+  "description": "Adds tree hollow for Twisted Tree from Architect's Palette mod",
   "authors": [
     "Reoseah"
   ],

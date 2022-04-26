@@ -18,6 +18,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -84,24 +85,34 @@ public class TreeHollows implements ModInitializer {
         TREE_HOLLOWS_MAP.put(Blocks.ACACIA_LOG, ACACIA_HOLLOW);
         TREE_HOLLOWS_MAP.put(Blocks.DARK_OAK_LOG, DARK_OAK_HOLLOW);
 
+        for (ConfiguredFeature<?, ?> feature : BuiltinRegistries.CONFIGURED_FEATURE) {
+            addTreeHollows(feature);
+        }
+        RegistryEntryAddedCallback.event(BuiltinRegistries.CONFIGURED_FEATURE).register((rawId, id, object) -> {
+            addTreeHollows(object);
+        });
         DynamicRegistrySetupCallback.EVENT.register(registryManager -> {
             Registry<ConfiguredFeature<?, ?>> registry = registryManager.getManaged(Registry.CONFIGURED_FEATURE_KEY);
             RegistryEntryAddedCallback.event(registry).register((rawId, id, object) -> {
-                if (object.feature() == Feature.TREE && object.config() instanceof TreeFeatureConfig config) {
-                    // skip anything if it already has tree hollow
-                    if (config.decorators.stream().anyMatch(decorator -> decorator instanceof TreeHollowTreeDecorator)
-                            // and anything with "fancy" logs
-                            || !(config.trunkProvider instanceof SimpleBlockStateProvider)) {
-                        return;
-                    }
-                    Block log = config.trunkProvider.getBlockState(new Random(), BlockPos.ORIGIN).getBlock();
-                    if (TreeHollows.TREE_HOLLOWS_MAP.containsKey(log)) {
-                        TreeDecorator decorator = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(log));
-
-                        ((ExtendedTreeFeatureConfig) config).addDecorator(decorator);
-                    }
-                }
+                addTreeHollows(object);
             });
         });
+    }
+
+    private static void addTreeHollows(ConfiguredFeature<?, ?> object) {
+        if (object.feature() == Feature.TREE && object.config() instanceof TreeFeatureConfig config) {
+            // skip anything if it already has tree hollow
+            if (config.decorators.stream().anyMatch(decorator -> decorator instanceof TreeHollowTreeDecorator)
+                    // and anything with "fancy" logs
+                    || !(config.trunkProvider instanceof SimpleBlockStateProvider)) {
+                return;
+            }
+            Block log = config.trunkProvider.getBlockState(new Random(), BlockPos.ORIGIN).getBlock();
+            if (TreeHollows.TREE_HOLLOWS_MAP.containsKey(log)) {
+                TreeDecorator decorator = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(log));
+
+                ((ExtendedTreeFeatureConfig) config).addDecorator(decorator);
+            }
+        }
     }
 }

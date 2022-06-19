@@ -8,4 +8,5 @@ pluginManagement {
     }
 }
 
-include 'core', 'architects-palette-support'
+include 'core'
+// , 'architects-palette-support'

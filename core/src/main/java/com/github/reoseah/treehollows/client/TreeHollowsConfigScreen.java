@@ -7,15 +7,13 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.Element;
 import net.minecraft.client.gui.Selectable;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.ScreenTexts;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.ElementListWidget;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.text.LiteralText;
+import net.minecraft.screen.ScreenTexts;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,9 +21,9 @@ import java.util.function.DoubleConsumer;
 
 @Environment(EnvType.CLIENT)
 public class TreeHollowsConfigScreen extends Screen {
-    private static final Text TITLE = new TranslatableText("options.treehollows.title");
-    private static final Text WORLD_GEN_CHANCE = new TranslatableText("options.treehollows.world_gen_chance");
-    private static final Text GROWTH_CHANCE = new TranslatableText("options.treehollows.growth_chance");
+    private static final Text TITLE = Text.translatable("options.treehollows.title");
+    private static final Text WORLD_GEN_CHANCE = Text.translatable("options.treehollows.world_gen_chance");
+    private static final Text GROWTH_CHANCE = Text.translatable("options.treehollows.growth_chance");
 
     protected final Screen previous;
     private ElementListWidget<?> list;
@@ -85,7 +83,7 @@ public class TreeHollowsConfigScreen extends Screen {
         }
 
         public PercentageSliderWidget(double value, DoubleConsumer consumer, Text label, int x, int y, int width, int height) {
-            super(x, y, width, height, LiteralText.EMPTY, value);
+            super(x, y, width, height, Text.empty(), value);
             this.consumer = consumer;
             this.label = label;
             this.updateMessage();
@@ -93,7 +91,7 @@ public class TreeHollowsConfigScreen extends Screen {
 
         @Override
         protected void updateMessage() {
-            this.setMessage(new TranslatableText("options.percent_value", this.label, Math.round(this.value * 100)));
+            this.setMessage(Text.translatable("options.percent_value", this.label, Math.round(this.value * 100)));
         }
 
         @Override

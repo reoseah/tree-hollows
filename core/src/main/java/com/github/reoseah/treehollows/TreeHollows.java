@@ -18,6 +18,8 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.LocalRandom;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
@@ -30,7 +32,10 @@ import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 
 public class TreeHollows implements ModInitializer {
     public static final String MOD_ID = "treehollows";
@@ -107,7 +112,7 @@ public class TreeHollows implements ModInitializer {
                     || !(config.trunkProvider instanceof SimpleBlockStateProvider)) {
                 return;
             }
-            Block log = config.trunkProvider.getBlockState(new Random(), BlockPos.ORIGIN).getBlock();
+            Block log = config.trunkProvider.getBlockState(new LocalRandom(0), BlockPos.ORIGIN).getBlock();
             if (TreeHollows.TREE_HOLLOWS_MAP.containsKey(log)) {
                 TreeDecorator decorator = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(log));
 

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "tree-hollows-core",
+  "id": "tree-hollows-main",
   "version": "${version}",
-  "name": "Core",
+  "name": "Main",
   "description": "Adds tree hollows for all vanilla logs and the base for all other modules",
   "authors": [
     "Reoseah"

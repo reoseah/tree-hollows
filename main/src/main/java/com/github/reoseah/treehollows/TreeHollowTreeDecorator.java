@@ -45,7 +45,7 @@ public class TreeHollowTreeDecorator extends TreeDecorator {
             generator.replace(pos, this.block.getDefaultState().with(TreeHollowBlock.FACING, facing));
 
             if (isWorldGen) {
-                LootableContainerBlockEntity.setLootTable((ChunkRegion) world, random, pos, TreeHollows.LOOT_TABLE_ID);
+                LootableContainerBlockEntity.setLootTable((ChunkRegion) world, random, pos, TreeHollows.getLootTableId(this.block));
             }
         }
     }

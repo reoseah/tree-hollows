@@ -14,9 +14,8 @@
   "icon": "assets/treehollows/icon.png",
   "environment": "*",
   "depends": {
-    "minecraft": "~1.19",
+    "minecraft": "*",
     "fabric": "*",
-
-    "tree-hollows-core": "*"
+    "tree-hollows-main": "*"
   }
 }

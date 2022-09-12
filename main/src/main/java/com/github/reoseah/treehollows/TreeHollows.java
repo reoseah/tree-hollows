@@ -2,11 +2,9 @@ package com.github.reoseah.treehollows;
 
 import com.google.common.collect.Sets;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.registry.DynamicRegistrySetupCallback;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
@@ -19,9 +17,7 @@ import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.LocalRandom;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.DynamicRegistryManager;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
@@ -57,10 +53,14 @@ public class TreeHollows implements ModInitializer {
 
     public static final TreeDecoratorType<TreeHollowTreeDecorator> TREE_DECORATOR_TYPE = new TreeDecoratorType<>(TreeHollowTreeDecorator.CODEC);
 
-    public static final Identifier LOOT_TABLE_ID = new Identifier(MOD_ID, "chests/tree_hollow");
 
     public static <T> void register(Registry<? super T> registry, String name, T entry) {
         Registry.register(registry, new Identifier(MOD_ID, name), entry);
+    }
+
+    public static Identifier getLootTableId(Block block) {
+        Identifier blockId = Registry.BLOCK.getId(block);
+        return new Identifier(blockId.getNamespace(), "tree_hollows/" + blockId.getPath());
     }
 
     @Override
@@ -105,18 +105,18 @@ public class TreeHollows implements ModInitializer {
     }
 
     private static void addTreeHollows(ConfiguredFeature<?, ?> object) {
-        if (object.feature() == Feature.TREE && object.config() instanceof TreeFeatureConfig config) {
+        if (object.feature() == Feature.TREE && object.config() instanceof TreeFeatureConfig cfg) {
             // skip anything if it already has tree hollow
-            if (config.decorators.stream().anyMatch(decorator -> decorator instanceof TreeHollowTreeDecorator)
+            if (cfg.decorators.stream().anyMatch(decorator -> decorator instanceof TreeHollowTreeDecorator)
                     // and anything with "fancy" logs
-                    || !(config.trunkProvider instanceof SimpleBlockStateProvider)) {
+                    || !(cfg.trunkProvider instanceof SimpleBlockStateProvider)) {
                 return;
             }
-            Block log = config.trunkProvider.getBlockState(new LocalRandom(0), BlockPos.ORIGIN).getBlock();
+            Block log = cfg.trunkProvider.getBlockState(new LocalRandom(0), BlockPos.ORIGIN).getBlock();
             if (TreeHollows.TREE_HOLLOWS_MAP.containsKey(log)) {
                 TreeDecorator decorator = new TreeHollowTreeDecorator(TreeHollows.TREE_HOLLOWS_MAP.get(log));
 
-                ((ExtendedTreeFeatureConfig) config).addDecorator(decorator);
+                ((ExtendedTreeFeatureConfig) cfg).addDecorator(decorator);
             }
         }
     }

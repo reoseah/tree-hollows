@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-var accessWidenerFile = file("core/src/main/resources/tree-hollows.accesswidener")
+var accessWidenerFile = file("main/src/main/resources/tree-hollows.accesswidener")
 
 allprojects {
     apply plugin: "fabric-loom"
@@ -64,8 +64,8 @@ allprojects {
 }
 
 dependencies {
-    implementation project(path: ":core", configuration: "namedElements")
-    include project(path: ":core")
+    implementation project(path: ":main", configuration: "namedElements")
+    include project(path: ":main")
 
 //    implementation project(path: ":architects-palette-support", configuration: "namedElements")
 //    include project(path: ":architects-palette-support")

@@ -4,15 +4,6 @@ import com.github.reoseah.treehollows.ExtendedTreeFeatureConfig;
 import com.github.reoseah.treehollows.TreeHollowTreeDecorator;
 import com.github.reoseah.treehollows.TreeHollows;
 import com.google.common.collect.ImmutableList;
-import net.minecraft.block.Block;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.feature.TreeFeatureConfig;
-import net.minecraft.world.gen.feature.size.FeatureSize;
-import net.minecraft.world.gen.foliage.FoliagePlacer;
-import net.minecraft.world.gen.stateprovider.BlockStateProvider;
-import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.treedecorator.TreeDecorator;
-import net.minecraft.world.gen.trunk.TrunkPlacer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -23,8 +14,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 import java.util.Random;
+import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
+import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 
-@Mixin(TreeFeatureConfig.class)
+@Mixin(TreeConfiguration.class)
 public class TreeFeatureConfigMixin implements ExtendedTreeFeatureConfig {
     @Shadow
     @Final

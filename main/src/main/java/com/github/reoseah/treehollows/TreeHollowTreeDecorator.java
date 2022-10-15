@@ -2,19 +2,19 @@ package com.github.reoseah.treehollows;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.block.entity.LootableContainerBlockEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.ChunkRegion;
-import net.minecraft.world.TestableWorld;
-import net.minecraft.world.gen.treedecorator.TreeDecorator;
-import net.minecraft.world.gen.treedecorator.TreeDecoratorType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelSimulatedReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
+import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 
 public class TreeHollowTreeDecorator extends TreeDecorator {
-    public static final Codec<TreeHollowTreeDecorator> CODEC = RecordCodecBuilder.create(instance -> instance.group(Registry.BLOCK.getCodec().fieldOf("block").forGetter(config -> config.block)).apply(instance, TreeHollowTreeDecorator::new));
+    public static final Codec<TreeHollowTreeDecorator> CODEC = RecordCodecBuilder.create(instance -> instance.group(Registry.BLOCK.byNameCodec().fieldOf("block").forGetter(config -> config.block)).apply(instance, TreeHollowTreeDecorator::new));
 
     protected final Block block;
 
@@ -23,29 +23,29 @@ public class TreeHollowTreeDecorator extends TreeDecorator {
     }
 
     @Override
-    protected TreeDecoratorType<?> getType() {
+    protected TreeDecoratorType<?> type() {
         return TreeHollows.TREE_DECORATOR_TYPE;
     }
 
     @Override
-    public void generate(Generator generator) {
-        TestableWorld world = generator.getWorld();
-        Random random = generator.getRandom();
+    public void place(Context generator) {
+        LevelSimulatedReader world = generator.level();
+        RandomSource random = generator.random();
 
-        boolean isWorldGen = world instanceof ChunkRegion;
+        boolean isWorldGen = world instanceof WorldGenRegion;
         if (random.nextFloat() <= (isWorldGen ? TreeHollows.config.getWorldGenerationChance() : TreeHollows.config.getGrowthChance())) {
             int height = 2 + random.nextInt(1);
-            if (generator.getLogPositions().size() <= height) {
+            if (generator.logs().size() <= height) {
                 return;
             }
             // log positions are sorted by Y coordinate
-            BlockPos pos = generator.getLogPositions().get(height);
-            Direction facing = Direction.fromHorizontal(random.nextInt(4));
+            BlockPos pos = generator.logs().get(height);
+            Direction facing = Direction.from2DDataValue(random.nextInt(4));
 
-            generator.replace(pos, this.block.getDefaultState().with(TreeHollowBlock.FACING, facing));
+            generator.setBlock(pos, this.block.defaultBlockState().setValue(TreeHollowBlock.FACING, facing));
 
             if (isWorldGen) {
-                LootableContainerBlockEntity.setLootTable((ChunkRegion) world, random, pos, TreeHollows.getLootTableId(this.block));
+                RandomizableContainerBlockEntity.setLootTable((WorldGenRegion) world, random, pos, TreeHollows.getLootTableId(this.block));
             }
         }
     }

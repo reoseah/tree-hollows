@@ -1,66 +1,66 @@
 package com.github.reoseah.treehollows;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.LootableContainerBlockEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.screen.Generic3x3ContainerScreenHandler;
-import net.minecraft.screen.ScreenHandler;
-import net.minecraft.text.Text;
-import net.minecraft.util.collection.DefaultedList;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.DispenserMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class TreeHollowBlockEntity extends LootableContainerBlockEntity {
-    protected final DefaultedList<ItemStack> stacks = DefaultedList.ofSize(9, ItemStack.EMPTY);
+public class TreeHollowBlockEntity extends RandomizableContainerBlockEntity {
+    protected final NonNullList<ItemStack> stacks = NonNullList.withSize(9, ItemStack.EMPTY);
 
     public TreeHollowBlockEntity(BlockPos pos, BlockState state) {
         super(TreeHollows.BLOCK_ENTITY_TYPE, pos, state);
     }
 
     @Override
-    protected DefaultedList<ItemStack> getInvStackList() {
+    protected NonNullList<ItemStack> getItems() {
         return this.stacks;
     }
 
     @Override
-    protected void setInvStackList(DefaultedList<ItemStack> list) {
+    protected void setItems(NonNullList<ItemStack> list) {
         for (int i = 0; i < this.stacks.size(); i++) {
-            this.setStack(i, list.get(i));
+            this.setItem(i, list.get(i));
         }
     }
 
     @Override
-    protected Text getContainerName() {
-        return Text.translatable("container.treehollows.tree_hollow");
+    protected Component getDefaultName() {
+        return Component.translatable("container.treehollows.tree_hollow");
     }
 
     @Override
-    protected ScreenHandler createScreenHandler(int syncId, PlayerInventory playerInventory) {
-        return new Generic3x3ContainerScreenHandler(syncId, playerInventory, this);
+    protected AbstractContainerMenu createMenu(int syncId, Inventory playerInventory) {
+        return new DispenserMenu(syncId, playerInventory, this);
     }
 
     @Override
-    public int size() {
+    public int getContainerSize() {
         return 9;
     }
 
 
     @Override
-    public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
+    public void load(CompoundTag nbt) {
+        super.load(nbt);
         this.stacks.clear();
-        if (!this.deserializeLootTable(nbt)) {
-            Inventories.readNbt(nbt, this.stacks);
+        if (!this.tryLoadLootTable(nbt)) {
+            ContainerHelper.loadAllItems(nbt, this.stacks);
         }
     }
 
     @Override
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
-        if (!this.serializeLootTable(nbt)) {
-            Inventories.writeNbt(nbt, this.stacks);
+    protected void saveAdditional(CompoundTag nbt) {
+        super.saveAdditional(nbt);
+        if (!this.trySaveLootTable(nbt)) {
+            ContainerHelper.saveAllItems(nbt, this.stacks);
         }
     }
 }

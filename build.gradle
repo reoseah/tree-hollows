@@ -3,8 +3,6 @@ plugins {
     id 'maven-publish'
 }
 
-var accessWidenerFile = file("main/src/main/resources/tree-hollows.accesswidener")
-
 allprojects {
     apply plugin: "fabric-loom"
 
@@ -41,7 +39,7 @@ allprojects {
     }
 
     loom {
-        accessWidenerPath = accessWidenerFile
+        accessWidenerPath = file("src/main/resources/tree-hollows.accesswidener")
         shareCaches()
     }
 
@@ -61,23 +59,10 @@ allprojects {
     java {
         withSourcesJar()
     }
-}
 
-dependencies {
-    implementation project(path: ":main", configuration: "namedElements")
-    include project(path: ":main")
-
-//    implementation project(path: ":architects-palette-support", configuration: "namedElements")
-//    include project(path: ":architects-palette-support")
-
-//    modRuntimeOnly  "curse.maven:architects-palette-487364:3695654"
-//    modRuntimeOnly ("me.shedaniel.cloth:cloth-config-fabric:6.2.57") {
-//        transitive = false
-//    }
-}
-
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
+    jar {
+        from("LICENSE") {
+            rename { "${it}_${project.archivesBaseName}" }
+        }
     }
 }

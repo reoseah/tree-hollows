@@ -1,6 +1,7 @@
 package com.github.reoseah.treehollows.impl;
 
 import com.github.reoseah.treehollows.TreeHollows;
+import com.github.reoseah.treehollows.TreeHollowsConfig;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -35,7 +36,7 @@ public class TreeHollowTreeDecorator extends TreeDecorator {
         RandomSource random = ctx.random();
 
         boolean isWorldGen = world instanceof WorldGenRegion;
-        if (random.nextFloat() <= (isWorldGen ? TreeHollows.config.getWorldGenerationChance() : TreeHollows.config.getGrowthChance())) {
+        if (random.nextFloat() <= (isWorldGen ? TreeHollowsConfig.getWorldGenerationChance() : TreeHollowsConfig.getGrowthChance())) {
             int height = 2 + random.nextInt(1);
             if (ctx.logs().size() <= height) {
                 return;

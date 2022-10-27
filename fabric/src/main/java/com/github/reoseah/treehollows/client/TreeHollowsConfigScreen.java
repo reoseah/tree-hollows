@@ -1,6 +1,5 @@
 package com.github.reoseah.treehollows.client;
 
-import com.github.reoseah.treehollows.TreeHollows;
 import com.github.reoseah.treehollows.TreeHollowsConfig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
@@ -14,6 +13,7 @@ import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.function.DoubleConsumer;
@@ -34,7 +34,7 @@ public class TreeHollowsConfigScreen extends Screen {
 
     @Override
     public void removed() {
-        TreeHollowsConfig.write(TreeHollows.config);
+        TreeHollowsConfig.writeToFile();
     }
 
     @Override
@@ -46,8 +46,8 @@ public class TreeHollowsConfigScreen extends Screen {
     protected void init() {
         this.list = new ContainerObjectSelectionList(this.minecraft, this.width, this.height, 32, this.height - 32, 25) {
             {
-                this.addEntry(new FullWidthEntry(new PercentageSliderWidget(TreeHollows.config.getWorldGenerationChance(), TreeHollows.config::setWorldGenerationChance, WORLD_GEN_CHANCE, width)));
-                this.addEntry(new FullWidthEntry(new PercentageSliderWidget(TreeHollows.config.getGrowthChance(), TreeHollows.config::setGrowthChance, GROWTH_CHANCE, width)));
+                this.addEntry(new FullWidthEntry(new PercentageSliderWidget(TreeHollowsConfig.getWorldGenerationChance(), TreeHollowsConfig::setWorldGenerationChance, WORLD_GEN_CHANCE, width)));
+                this.addEntry(new FullWidthEntry(new PercentageSliderWidget(TreeHollowsConfig.getGrowthChance(), TreeHollowsConfig::setGrowthChance, GROWTH_CHANCE, width)));
             }
 
             @Override

@@ -27,8 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TreeHollows {
-    public static TreeHollowsConfig config = TreeHollowsConfig.reload();
-
     public static final Block OAK_HOLLOW = Platform.instance.register("oak_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(2.0f).sound(SoundType.WOOD)));
     public static final Block SPRUCE_HOLLOW = Platform.instance.register("spruce_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.PODZOL).strength(2.0f).sound(SoundType.WOOD)));
     public static final Block BIRCH_HOLLOW = Platform.instance.register("birch_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.SAND).strength(2.0f).sound(SoundType.WOOD)));
@@ -69,7 +67,7 @@ public class TreeHollows {
                     return;
                 }
             }
-            // and tree if it has complex logs
+            // or if it has complicated logs
             if (!(cfg.trunkProvider instanceof SimpleStateProvider)) {
                 return;
             }

@@ -15,12 +15,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class TreeHollowsConfig {
-    public static final Logger LOGGER = LoggerFactory.getLogger("treehollows");
+    public static final Logger LOGGER = LoggerFactory.getLogger("tree-hollows");
     public static final Codec<TreeHollowsConfig> CODEC = RecordCodecBuilder.create( //
             instance -> instance.group( //
-                            Codec.floatRange(0.0f, 1.0f).fieldOf("world_generation_chance").forGetter(config -> config.worldGenerationChance), //
-                            Codec.floatRange(0.0f, 1.0f).fieldOf("growth_chance").forGetter(config -> config.growthChance)) //
+                            Codec.floatRange(0.0f, 1.0f).fieldOf("world_generation_chance").orElse(0.05F).forGetter(config -> config.worldGenerationChance), //
+                            Codec.floatRange(0.0f, 1.0f).fieldOf("growth_chance").orElse(0.05F).forGetter(config -> config.growthChance)) //
                     .apply(instance, TreeHollowsConfig::new));
+
+    private static TreeHollowsConfig instance;
 
     private float worldGenerationChance;
     private float growthChance;
@@ -34,48 +36,54 @@ public class TreeHollowsConfig {
         this.growthChance = growthChance;
     }
 
-    public static TreeHollowsConfig reload() {
+    public static TreeHollowsConfig getInstance() {
+        if (instance == null) {
+            reload();
+        }
+        return instance;
+    }
+
+    public static void reload() {
         Path configPath = FabricLoader.getInstance().getConfigDir().resolve("tree-hollows.json");
 
         if (Files.exists(configPath)) {
             try (BufferedReader reader = Files.newBufferedReader(configPath)) {
-                return CODEC.decode(JsonOps.INSTANCE, JsonParser.parseReader(reader)).result().map(Pair::getFirst).orElseThrow();
+                instance = CODEC.decode(JsonOps.INSTANCE, JsonParser.parseReader(reader)).result().map(Pair::getFirst).orElseThrow();
             } catch (Exception e) {
                 LOGGER.error("Error while reading config, using defaults", e);
-                return new TreeHollowsConfig();
+                instance = new TreeHollowsConfig();
             }
         } else {
             LOGGER.info("Missing config file, creating default");
-            TreeHollowsConfig config = new TreeHollowsConfig();
-            write(config);
-            return config;
+            instance = new TreeHollowsConfig();
+            writeToFile();
         }
     }
 
-    public static void write(TreeHollowsConfig config) {
+    public static void writeToFile() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Path configPath = FabricLoader.getInstance().getConfigDir().resolve("tree-hollows.json");
         try (BufferedWriter writer = Files.newBufferedWriter(configPath)) {
-            JsonElement json = CODEC.encode(config, JsonOps.INSTANCE, new JsonObject()).result().orElseThrow();
+            JsonElement json = CODEC.encode(instance, JsonOps.INSTANCE, new JsonObject()).result().orElseThrow();
             gson.toJson(json, gson.newJsonWriter(writer));
         } catch (Exception e) {
             LOGGER.warn("Error while writing config", e);
         }
     }
 
-    public float getWorldGenerationChance() {
-        return this.worldGenerationChance;
+    public static float getWorldGenerationChance() {
+        return getInstance().worldGenerationChance;
     }
 
-    public void setWorldGenerationChance(double value) {
-        this.worldGenerationChance = Math.round(value * 100) / 100F;
+    public static void setWorldGenerationChance(double value) {
+        getInstance().worldGenerationChance = Math.round(value * 100) / 100F;
     }
 
-    public float getGrowthChance() {
-        return this.growthChance;
+    public static float getGrowthChance() {
+        return getInstance().growthChance;
     }
 
-    public void setGrowthChance(double value) {
-        this.growthChance = Math.round(value * 100) / 100F;
+    public static void setGrowthChance(double value) {
+        getInstance().growthChance = Math.round(value * 100) / 100F;
     }
 }

@@ -1,13 +1,3 @@
-sourceSets {
-    main {
-        java {
-            srcDirs = [new File(rootProject.projectDir, 'src/fabric/java')]
-        }
-        resources {
-            srcDirs = [new File(rootProject.projectDir, 'src/fabric/resources')]
-        }
-    }
-}
 
 repositories {
     maven {
@@ -46,6 +36,7 @@ loom {
     mods {
         fabric {
             sourceSet sourceSets.main
+            sourceSet project(':').sourceSets.main
         }
     }
 }

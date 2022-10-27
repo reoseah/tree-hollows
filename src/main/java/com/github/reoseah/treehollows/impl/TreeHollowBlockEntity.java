@@ -1,5 +1,6 @@
-package com.github.reoseah.treehollows;
+package com.github.reoseah.treehollows.impl;
 
+import com.github.reoseah.treehollows.TreeHollows;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;

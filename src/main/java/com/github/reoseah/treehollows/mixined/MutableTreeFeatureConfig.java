@@ -1,7 +1,7 @@
-package com.github.reoseah.treehollows;
+package com.github.reoseah.treehollows.mixined;
 
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 
-public interface ExtendedTreeFeatureConfig {
+public interface MutableTreeFeatureConfig {
     void addDecorator(TreeDecorator decorator);
 }

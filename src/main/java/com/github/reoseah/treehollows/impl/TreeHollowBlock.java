@@ -1,4 +1,4 @@
-package com.github.reoseah.treehollows;
+package com.github.reoseah.treehollows.impl;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

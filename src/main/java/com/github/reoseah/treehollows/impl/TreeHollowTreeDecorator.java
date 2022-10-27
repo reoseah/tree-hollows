@@ -1,10 +1,12 @@
-package com.github.reoseah.treehollows;
+package com.github.reoseah.treehollows.impl;
 
+import com.github.reoseah.treehollows.TreeHollows;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelSimulatedReader;
@@ -28,25 +30,30 @@ public class TreeHollowTreeDecorator extends TreeDecorator {
     }
 
     @Override
-    public void place(Context generator) {
-        LevelSimulatedReader world = generator.level();
-        RandomSource random = generator.random();
+    public void place(Context ctx) {
+        LevelSimulatedReader world = ctx.level();
+        RandomSource random = ctx.random();
 
         boolean isWorldGen = world instanceof WorldGenRegion;
         if (random.nextFloat() <= (isWorldGen ? TreeHollows.config.getWorldGenerationChance() : TreeHollows.config.getGrowthChance())) {
             int height = 2 + random.nextInt(1);
-            if (generator.logs().size() <= height) {
+            if (ctx.logs().size() <= height) {
                 return;
             }
             // log positions are sorted by Y coordinate
-            BlockPos pos = generator.logs().get(height);
+            BlockPos pos = ctx.logs().get(height);
             Direction facing = Direction.from2DDataValue(random.nextInt(4));
 
-            generator.setBlock(pos, this.block.defaultBlockState().setValue(TreeHollowBlock.FACING, facing));
+            ctx.setBlock(pos, this.block.defaultBlockState().setValue(TreeHollowBlock.FACING, facing));
 
             if (isWorldGen) {
-                RandomizableContainerBlockEntity.setLootTable((WorldGenRegion) world, random, pos, TreeHollows.getLootTableId(this.block));
+                RandomizableContainerBlockEntity.setLootTable((WorldGenRegion) world, random, pos, getLootTable(this.block));
             }
         }
+    }
+
+    private static ResourceLocation getLootTable(Block log) {
+        ResourceLocation blockId = Registry.BLOCK.getKey(log);
+        return new ResourceLocation(blockId.getNamespace(), "tree_hollows/" + blockId.getPath());
     }
 }

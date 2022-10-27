@@ -15,7 +15,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.reoseah.treehollows.TreeHollows"
+      "com.github.reoseah.treehollows.TreeHollowsFabric"
     ],
     "modmenu": [
       "com.github.reoseah.treehollows.client.TreeHollowsModMenuImpl"

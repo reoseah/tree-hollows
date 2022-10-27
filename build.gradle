@@ -1,22 +1,33 @@
 plugins {
-    id 'fabric-loom' version '0.11-SNAPSHOT' apply false
-    id 'maven-publish'
+    id "dev.architectury.loom" version "0.12.0-SNAPSHOT" apply false
+    id 'java'
 }
 
 allprojects {
-    apply plugin: "fabric-loom"
+    apply plugin: 'java'
+    apply plugin: 'java-library'
+    apply plugin: "dev.architectury.loom"
 
+    archivesBaseName = "gradle-atrocities-" + project.name
     version = project.mod_version
     group = project.maven_group
 
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    java.withSourcesJar()
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.encoding = 'UTF-8'
+        it.options.release = 17
+    }
 
     repositories {
-        // for ModMenu
         maven {
-            url = "https://maven.terraformersmc.com/releases"
+            name = 'Mixin'
+            url = 'https://repo.spongepowered.org/repository/maven-public/'
         }
+
         maven {
             url "https://maven.parchmentmc.net/"
             content {
@@ -26,43 +37,17 @@ allprojects {
     }
 
     dependencies {
-        // To change the versions see the gradle.properties file
         minecraft "com.mojang:minecraft:${project.minecraft_version}"
         mappings loom.layered() {
             officialMojangMappings()
             parchment("org.parchmentmc.data:parchment-1.19.2:2022.10.09@zip")
         }
-        modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-        modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-        modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+        modImplementation "net.fabricmc:fabric-loader:${rootProject.loader_version}"
     }
 
+    var accessWidener = new File(rootProject.projectDir, 'src/main/resources/tree-hollows.accesswidener')
     loom {
-        accessWidenerPath = file("src/main/resources/tree-hollows.accesswidener")
+        accessWidenerPath = accessWidener
         shareCaches()
-    }
-
-    processResources {
-        inputs.property "version", project.version
-
-        filesMatching("fabric.mod.json") {
-            expand "version": project.version
-        }
-    }
-
-    tasks.withType(JavaCompile).configureEach {
-        it.options.encoding = "UTF-8"
-        it.options.release = 17
-    }
-
-    java {
-        withSourcesJar()
-    }
-
-    jar {
-        from("LICENSE") {
-            rename { "${it}_${project.archivesBaseName}" }
-        }
     }
 }

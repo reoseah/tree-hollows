@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = [new File(rootProject.projectDir, 'src/forge/java')]
+        }
+        resources {
+            srcDirs = [new File(rootProject.projectDir, 'src/forge/resources')]
+        }
+    }
+}
+
+repositories {
+
+}
+
+dependencies {
+    forge "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+}
+
+compileJava {
+    source(rootProject.sourceSets.main.allSource)
+}
+
+processResources {
+    from rootProject.sourceSets.main.resources
+}

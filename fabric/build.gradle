@@ -1,0 +1,51 @@
+sourceSets {
+    main {
+        java {
+            srcDirs = [new File(rootProject.projectDir, 'src/fabric/java')]
+        }
+        resources {
+            srcDirs = [new File(rootProject.projectDir, 'src/fabric/resources')]
+        }
+    }
+}
+
+repositories {
+    maven {
+        url = "https://maven.terraformersmc.com/releases"
+    }
+}
+
+dependencies {
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_version}"
+    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
+
+    api project(path: ':', configuration: 'namedElements')
+}
+
+compileJava {
+    source(rootProject.sourceSets.main.allSource)
+}
+
+processResources {
+    from rootProject.sourceSets.main.resources
+
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+jar {
+    from("LICENSE") {
+        rename { "${it}_${project.archivesBaseName}"}
+    }
+}
+
+loom {
+    mods {
+        fabric {
+            sourceSet sourceSets.main
+        }
+    }
+}

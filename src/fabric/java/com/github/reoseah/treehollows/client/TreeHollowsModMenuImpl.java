@@ -1,6 +1,5 @@
 package com.github.reoseah.treehollows.client;
 
-import com.github.reoseah.treehollows.TreeHollows;
 import com.google.common.collect.ImmutableMap;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;

@@ -19,7 +19,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: checkout repository
-        if: ${{ steps.release-please.outputs.release_created }}
         uses: actions/checkout@v3
 
       - name: validate gradle wrapper
@@ -33,11 +32,13 @@ jobs:
           distribution: adopt
           
       - name: make gradle wrapper executable
+        if: ${{ steps.release-please.outputs.release_created }}
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
         
       - name: gradlew build 
-        run: ./gradlew build
+        run: ./gradlew
+        if: ${{ steps.release-please.outputs.release_created }}
 
       - name: upload release
         if: ${{ steps.release-please.outputs.release_created }}

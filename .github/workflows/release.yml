@@ -28,6 +28,10 @@ jobs:
         with:
           java-version: 17
           distribution: adopt
+          
+      - name: make gradle wrapper executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
 
       - name: setup gradle and build
         if: ${{ steps.release-please.outputs.release_created }}

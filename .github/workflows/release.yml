@@ -19,9 +19,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: checkout repository
+        if: ${{ steps.release-please.outputs.release_created }}
         uses: actions/checkout@v3
 
       - name: validate gradle wrapper
+        if: ${{ steps.release-please.outputs.release_created }}
         uses: gradle/wrapper-validation-action@v1
         
       - name: setup jdk

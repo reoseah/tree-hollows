@@ -8,7 +8,6 @@ allprojects {
     apply plugin: 'java-library'
     apply plugin: "dev.architectury.loom"
 
-    archivesBaseName = "tree-hollows-" + project.name
     version = project.mod_version
     group = project.maven_group
 
@@ -50,4 +49,8 @@ allprojects {
         accessWidenerPath = accessWidener
         shareCaches()
     }
+}
+
+subprojects {
+    archivesBaseName = "tree-hollows-" + project.name
 }

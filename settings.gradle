@@ -19,5 +19,5 @@ pluginManagement {
 include('fabric', 'forge')
 
 rootProject.name = 'tree-hollows'
-project(':fabric').name = 'tree-hollows-fabric'
-project(':forge').name = 'tree-hollows-forge'
+project(':fabric').name = 'fabric'
+project(':forge').name = 'forge'

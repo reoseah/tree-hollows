@@ -20,7 +20,7 @@ import java.util.function.DoubleConsumer;
 
 @Environment(EnvType.CLIENT)
 public class TreeHollowsConfigScreen extends Screen {
-    private static final Component TITLE = Component.translatable("options.treehollows.title");
+    private static final Component TITLE = Component.translatable("options.treehollows");
     private static final Component WORLD_GEN_CHANCE = Component.translatable("options.treehollows.world_gen_chance");
     private static final Component GROWTH_CHANCE = Component.translatable("options.treehollows.growth_chance");
 
@@ -62,7 +62,7 @@ public class TreeHollowsConfigScreen extends Screen {
         };
 
         this.addWidget(this.list);
-        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height - 27, 200, 20, CommonComponents.GUI_DONE, button -> this.minecraft.setScreen(this.previous)));
+        this.addRenderableWidget(new Button.Builder(CommonComponents.GUI_DONE, button -> this.minecraft.setScreen(this.previous)).pos(this.width / 2 - 100, this.height - 27).size(200, 20).build());
     }
 
     @Override
@@ -108,7 +108,7 @@ public class TreeHollowsConfigScreen extends Screen {
 
         @Override
         public void render(PoseStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
-            this.widget.y = y;
+            this.widget.setY(y);
             this.widget.render(matrices, mouseX, mouseY, tickDelta);
         }
 

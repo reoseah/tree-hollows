@@ -32,10 +32,10 @@ public class TreeHollowBlock extends BaseEntityBlock {
     }
 
     @Override
-    public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack itemStack) {
+    public void setPlacedBy(Level world, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
         BlockEntity be = world.getBlockEntity(pos);
-        if (itemStack.hasCustomHoverName() && be instanceof BaseContainerBlockEntity) {
-            ((BaseContainerBlockEntity) be).setCustomName(itemStack.getHoverName());
+        if (stack.hasCustomHoverName() && be instanceof BaseContainerBlockEntity) {
+            ((BaseContainerBlockEntity) be).setCustomName(stack.getHoverName());
         }
     }
 

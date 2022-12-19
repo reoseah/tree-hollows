@@ -6,7 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.util.RandomSource;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 
 public class TreeHollowTreeDecorator extends TreeDecorator {
-    public static final Codec<TreeHollowTreeDecorator> CODEC = RecordCodecBuilder.create(instance -> instance.group(Registry.BLOCK.byNameCodec().fieldOf("block").forGetter(config -> config.block)).apply(instance, TreeHollowTreeDecorator::new));
+    public static final Codec<TreeHollowTreeDecorator> CODEC = RecordCodecBuilder.create(instance -> instance.group(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("block").forGetter(config -> config.block)).apply(instance, TreeHollowTreeDecorator::new));
 
     protected final Block block;
 
@@ -48,13 +48,13 @@ public class TreeHollowTreeDecorator extends TreeDecorator {
             ctx.setBlock(pos, this.block.defaultBlockState().setValue(TreeHollowBlock.FACING, facing));
 
             if (isWorldGen) {
-                RandomizableContainerBlockEntity.setLootTable((WorldGenRegion) world, random, pos, getLootTable(this.block));
+                RandomizableContainerBlockEntity.setLootTable((WorldGenRegion) world, random, pos, getTreeHollowLootTable(this.block));
             }
         }
     }
 
-    private static ResourceLocation getLootTable(Block log) {
-        ResourceLocation blockId = Registry.BLOCK.getKey(log);
+    private static ResourceLocation getTreeHollowLootTable(Block log) {
+        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(log);
         return new ResourceLocation(blockId.getNamespace(), "tree_hollows/" + blockId.getPath());
     }
 }

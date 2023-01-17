@@ -36,7 +36,6 @@ jobs:
           
       - name: make gradle wrapper executable
         if: ${{ steps.release-please.outputs.release_created }}
-        if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
         
       - name: gradlew build 

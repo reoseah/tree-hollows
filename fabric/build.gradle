@@ -6,7 +6,7 @@ repositories {
 }
 
 dependencies {
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
 
     api project(path: ':', configuration: 'namedElements')

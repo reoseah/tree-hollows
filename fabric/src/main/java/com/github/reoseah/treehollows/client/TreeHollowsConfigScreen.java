@@ -4,6 +4,8 @@ import com.github.reoseah.treehollows.TreeHollowsConfig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
@@ -66,11 +68,12 @@ public class TreeHollowsConfigScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack matrices, int mouseX, int mouseY, float delta) {
-        this.renderBackground(matrices);
-        this.list.render(matrices, mouseX, mouseY, delta);
-        drawCenteredString(matrices, this.font, this.title, this.width / 2, 20, 0xFFFFFF);
-        super.render(matrices, mouseX, mouseY, delta);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        this.renderBackground(graphics);
+        this.list.render(graphics, mouseX, mouseY, delta);
+
+        graphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 0xFFFFFF);
+        super.render(graphics, mouseX, mouseY, delta);
     }
 
     private static class PercentageSliderWidget extends AbstractSliderButton {
@@ -107,9 +110,9 @@ public class TreeHollowsConfigScreen extends Screen {
         }
 
         @Override
-        public void render(PoseStack matrices, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
+        public void render(GuiGraphics graphics, int index, int y, int x, int entryWidth, int entryHeight, int mouseX, int mouseY, boolean hovered, float tickDelta) {
             this.widget.setY(y);
-            this.widget.render(matrices, mouseX, mouseY, tickDelta);
+            this.widget.render(graphics, mouseX, mouseY, tickDelta);
         }
 
         @Override

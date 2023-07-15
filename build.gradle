@@ -53,4 +53,26 @@ allprojects {
 
 subprojects {
     archivesBaseName = "tree-hollows-" + project.name
+
+    loom {
+        runs {
+            client {
+                client()
+                setConfigName(project.name + " Client")
+                ideConfigGenerated(true)
+                runDir("./run")
+            }
+            server {
+                server()
+                setConfigName(project.name + " Server")
+                ideConfigGenerated(true)
+                runDir("./run")
+            }
+        }
+    }
+}
+
+loom {
+    runs {
+    }
 }

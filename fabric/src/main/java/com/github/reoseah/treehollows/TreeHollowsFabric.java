@@ -57,14 +57,15 @@ public class TreeHollowsFabric implements ModInitializer {
         };
         TreeHollows.initialize();
 
-        insertTreeHollowsGeneration();
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.NATURAL_BLOCKS).register(content -> {
             content.acceptAll(creativeStacks);
         });
+        insertTreeHollowsGeneration();
     }
 
     private static void insertTreeHollowsGeneration() {
         DynamicRegistrySetupCallback.EVENT.register(registryView -> {
+//            registryView.registerEntryAdded(Registries.CONFIGURED_FEATURE, (rawId, id, object) -> TreeHollows.tryInsertTreeDecorator(object));
             Optional<Registry<ConfiguredFeature<?, ?>>> optional = registryView.getOptional(Registries.CONFIGURED_FEATURE);
             if (optional.isPresent()) {
                 Registry<ConfiguredFeature<?, ?>> configuredFeatures = optional.get();

@@ -3,10 +3,9 @@ package com.github.reoseah.treehollows;
 import com.github.reoseah.treehollows.impl.TreeHollowBlock;
 import com.github.reoseah.treehollows.impl.TreeHollowBlockEntity;
 import com.github.reoseah.treehollows.impl.TreeHollowTreeDecorator;
-import com.github.reoseah.treehollows.mixined.MutableTreeFeatureConfig;
+import com.github.reoseah.treehollows.impl.MutableTreeConfiguration;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -20,19 +19,18 @@ import net.minecraft.world.level.levelgen.feature.configurations.TreeConfigurati
 import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.material.MapColor;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TreeHollows {
-    public static final Block OAK_HOLLOW = Platform.instance.register("oak_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(2.0f).sound(SoundType.WOOD)));
-    public static final Block SPRUCE_HOLLOW = Platform.instance.register("spruce_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.PODZOL).strength(2.0f).sound(SoundType.WOOD)));
-    public static final Block BIRCH_HOLLOW = Platform.instance.register("birch_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.SAND).strength(2.0f).sound(SoundType.WOOD)));
-    public static final Block JUNGLE_HOLLOW = Platform.instance.register("jungle_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.DIRT).strength(2.0f).sound(SoundType.WOOD)));
-    public static final Block ACACIA_HOLLOW = Platform.instance.register("acacia_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_ORANGE).strength(2.0f).sound(SoundType.WOOD)));
-    public static final Block DARK_OAK_HOLLOW = Platform.instance.register("dark_oak_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(2.0f).sound(SoundType.WOOD)));
+    public static final Block OAK_HOLLOW = Platform.instance.register("oak_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0f).sound(SoundType.WOOD)));
+    public static final Block SPRUCE_HOLLOW = Platform.instance.register("spruce_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PODZOL).strength(2.0f).sound(SoundType.WOOD)));
+    public static final Block BIRCH_HOLLOW = Platform.instance.register("birch_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of().mapColor(MapColor.SAND).strength(2.0f).sound(SoundType.WOOD)));
+    public static final Block JUNGLE_HOLLOW = Platform.instance.register("jungle_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).strength(2.0f).sound(SoundType.WOOD)));
+    public static final Block ACACIA_HOLLOW = Platform.instance.register("acacia_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(2.0f).sound(SoundType.WOOD)));
+    public static final Block DARK_OAK_HOLLOW = Platform.instance.register("dark_oak_hollow", new TreeHollowBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(2.0f).sound(SoundType.WOOD)));
 
     public static final Item ITEM_OAK = Platform.instance.register("oak_hollow", new BlockItem(OAK_HOLLOW, new Item.Properties()));
     public static final Item ITEM_SPRUCE = Platform.instance.register("spruce_hollow", new BlockItem(SPRUCE_HOLLOW, new Item.Properties()));
@@ -73,7 +71,7 @@ public class TreeHollows {
             }
             Block log = cfg.trunkProvider.getState(new SingleThreadedRandomSource(0), BlockPos.ZERO).getBlock();
             if (TreeHollows.LOG_TO_HOLLOW_LOG.containsKey(log)) {
-                ((MutableTreeFeatureConfig) cfg).addDecorator(new TreeHollowTreeDecorator(TreeHollows.LOG_TO_HOLLOW_LOG.get(log)));
+                ((MutableTreeConfiguration) cfg).addDecorator(new TreeHollowTreeDecorator(TreeHollows.LOG_TO_HOLLOW_LOG.get(log)));
             }
         }
     }

@@ -62,6 +62,7 @@ public class TreeHollowsConfig {
 
     public static void writeToFile() {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        // FIXME won't work on forge, even though FabricLoader exists in dev env
         Path configPath = FabricLoader.getInstance().getConfigDir().resolve("tree-hollows.json");
         try (BufferedWriter writer = Files.newBufferedWriter(configPath)) {
             JsonElement json = CODEC.encode(instance, JsonOps.INSTANCE, new JsonObject()).result().orElseThrow();

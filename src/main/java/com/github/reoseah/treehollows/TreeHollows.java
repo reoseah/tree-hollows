@@ -2,9 +2,7 @@ package com.github.reoseah.treehollows;
 
 import com.github.reoseah.treehollows.impl.TreeHollowBlock;
 import com.github.reoseah.treehollows.impl.TreeHollowBlockEntity;
-import com.github.reoseah.treehollows.impl.TreeHollowTreeDecorator;
-import com.github.reoseah.treehollows.impl.MutableTreeConfiguration;
-import net.minecraft.core.BlockPos;
+import com.github.reoseah.treehollows.impl.TreeHollowDecorator;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -12,12 +10,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.levelgen.SingleThreadedRandomSource;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
-import net.minecraft.world.level.levelgen.feature.stateproviders.SimpleStateProvider;
-import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 import net.minecraft.world.level.material.MapColor;
 
@@ -40,7 +32,7 @@ public class TreeHollows {
     public static final Item ITEM_DARK_OAK = Platform.instance.register("dark_oak_hollow", new BlockItem(DARK_OAK_HOLLOW, new Item.Properties()));
 
     public static final BlockEntityType<?> BLOCK_ENTITY_TYPE = Platform.instance.registerBlockEntity("tree_hollow", TreeHollowBlockEntity::new, OAK_HOLLOW, SPRUCE_HOLLOW, BIRCH_HOLLOW, JUNGLE_HOLLOW, ACACIA_HOLLOW, DARK_OAK_HOLLOW);
-    public static final TreeDecoratorType<?> TREE_DECORATOR_TYPE = Platform.instance.registerTreeDecorator("tree_hollow", TreeHollowTreeDecorator.CODEC);
+    public static final TreeDecoratorType<?> TREE_DECORATOR_TYPE = Platform.instance.registerTreeDecorator("tree_hollow", TreeHollowDecorator.CODEC);
 
     public static final Map<Block, Block> LOG_TO_HOLLOW_LOG = new HashMap<>();
 
@@ -55,24 +47,5 @@ public class TreeHollows {
 
     public static void initialize() {
 
-    }
-
-    public static void tryInsertTreeDecorator(ConfiguredFeature<?, ?> object) {
-        if (object.feature() == Feature.TREE && object.config() instanceof TreeConfiguration cfg) {
-            // skip tree if it already has tree hollow
-            for (TreeDecorator decorator : cfg.decorators) {
-                if (decorator instanceof TreeHollowTreeDecorator) {
-                    return;
-                }
-            }
-            // or if it has complicated logs
-            if (!(cfg.trunkProvider instanceof SimpleStateProvider)) {
-                return;
-            }
-            Block log = cfg.trunkProvider.getState(new SingleThreadedRandomSource(0), BlockPos.ZERO).getBlock();
-            if (TreeHollows.LOG_TO_HOLLOW_LOG.containsKey(log)) {
-                ((MutableTreeConfiguration) cfg).addDecorator(new TreeHollowTreeDecorator(TreeHollows.LOG_TO_HOLLOW_LOG.get(log)));
-            }
-        }
     }
 }

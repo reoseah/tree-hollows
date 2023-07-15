@@ -16,12 +16,12 @@ import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 
-public class TreeHollowTreeDecorator extends TreeDecorator {
-    public static final Codec<TreeHollowTreeDecorator> CODEC = RecordCodecBuilder.create(instance -> instance.group(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("block").forGetter(config -> config.block)).apply(instance, TreeHollowTreeDecorator::new));
+public class TreeHollowDecorator extends TreeDecorator {
+    public static final Codec<TreeHollowDecorator> CODEC = RecordCodecBuilder.create(instance -> instance.group(BuiltInRegistries.BLOCK.byNameCodec().fieldOf("block").forGetter(config -> config.block)).apply(instance, TreeHollowDecorator::new));
 
     protected final Block block;
 
-    public TreeHollowTreeDecorator(Block block) {
+    public TreeHollowDecorator(Block block) {
         this.block = block;
     }
 
@@ -53,8 +53,8 @@ public class TreeHollowTreeDecorator extends TreeDecorator {
         }
     }
 
-    private static ResourceLocation getTreeHollowLootTable(Block log) {
-        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(log);
+    private static ResourceLocation getTreeHollowLootTable(Block treeHollow) {
+        ResourceLocation blockId = BuiltInRegistries.BLOCK.getKey(treeHollow);
         return new ResourceLocation(blockId.getNamespace(), "tree_hollows/" + blockId.getPath());
     }
 }

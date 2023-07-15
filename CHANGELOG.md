@@ -1,5 +1,22 @@
 # Changelog
 
+## [3.0.0](https://github.com/reoseah/tree-hollows/compare/v2.0.0...v3.0.0) (2023-07-15)
+
+
+### ⚠ BREAKING CHANGES
+
+* update dependencies to 1.20
+
+### Features
+
+* add zh_cn.json ([1db01c9](https://github.com/reoseah/tree-hollows/commit/1db01c9d38976bbac35e091d60db654e69fe390f))
+* update dependencies to 1.20 ([f27c624](https://github.com/reoseah/tree-hollows/commit/f27c624c89456e863159b3cf191ebd490ec92d02))
+
+
+### Bug Fixes
+
+* fix automatic github release not having compiled files ([2b18df3](https://github.com/reoseah/tree-hollows/commit/2b18df3a95a818f4a05cc079a3a0e6720bce448f))
+
 ## [2.0.0](https://github.com/Reoseah/tree-hollows/compare/v1.5.0...v2.0.0) (2022-12-19)
 
 

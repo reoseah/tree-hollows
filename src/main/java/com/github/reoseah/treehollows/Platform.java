@@ -13,7 +13,28 @@ import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorTy
 import java.util.function.BiFunction;
 
 public abstract class Platform {
-    public static Platform instance;
+    public static final Platform instance = createInstance();
+
+    static Platform createInstance() {
+        try {
+            return (Platform) Platform.class.getClassLoader() //
+                    .loadClass("com.github.reoseah.treehollows.FabricPlatform") //
+                    .getDeclaredConstructor() //
+                    .newInstance();
+        } catch (Exception nofabric) {
+            try {
+                return (Platform) Platform.class.getClassLoader() //
+                        .loadClass("com.github.reoseah.treehollows.ForgePlatform") //
+                        .getDeclaredConstructor() //
+                        .newInstance();
+            } catch (Exception noforge) {
+                RuntimeException error = new RuntimeException("Couldn't find loader-specific implementation");
+                error.addSuppressed(nofabric);
+                error.addSuppressed(noforge);
+                throw error;
+            }
+        }
+    }
 
     public abstract <T extends Block> T register(String name, T block);
 

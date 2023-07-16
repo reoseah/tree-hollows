@@ -45,7 +45,7 @@ public class TreeHollows {
         LOG_TO_HOLLOW_LOG.put(Blocks.DARK_OAK_LOG, DARK_OAK_HOLLOW);
     }
 
-    public static void initialize() {
+    public static void loadClass() {
 
     }
 }

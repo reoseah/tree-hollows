@@ -1,5 +1,12 @@
 # Changelog
 
+## [3.0.1](https://github.com/reoseah/tree-hollows/compare/v3.0.0...v3.0.1) (2023-07-16)
+
+
+### Bug Fixes
+
+* crash due to classes initialized out of order with some other mods present ([a92bd73](https://github.com/reoseah/tree-hollows/commit/a92bd73ca7be8f0356c517e30476352a25624250))
+
 ## [3.0.0](https://github.com/reoseah/tree-hollows/compare/v2.0.0...v3.0.0) (2023-07-15)
 
 

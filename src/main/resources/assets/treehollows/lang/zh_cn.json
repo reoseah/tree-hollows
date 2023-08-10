@@ -1,0 +1,14 @@
+{
+  "block.treehollows.oak_hollow": "橡木树洞",
+  "block.treehollows.spruce_hollow": "云杉树洞",
+  "block.treehollows.birch_hollow": "白桦树洞",
+  "block.treehollows.jungle_hollow": "丛林树洞",
+  "block.treehollows.acacia_hollow": "金合欢树洞",
+  "block.treehollows.dark_oak_hollow": "深色橡木树洞",
+
+  "container.treehollows.tree_hollow": "树洞",
+
+  "options.treehollows": "树洞选项",
+  "options.treehollows.world_gen_chance": "世界生成概率",
+  "options.treehollows.growth_chance": "生长形成概率"
+}

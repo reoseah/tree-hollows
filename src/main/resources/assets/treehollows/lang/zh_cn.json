@@ -8,7 +8,7 @@
 
   "container.treehollows.tree_hollow": "树洞",
 
-  "options.treehollows.title": "树洞选项",
+  "options.treehollows": "树洞选项",
   "options.treehollows.world_gen_chance": "世界生成概率",
-  "options.treehollows.growth_chance": "自然形成概率"
+  "options.treehollows.growth_chance": "生长形成概率"
 }

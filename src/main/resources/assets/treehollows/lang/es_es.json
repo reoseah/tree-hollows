@@ -1,0 +1,14 @@
+{
+  "block.treehollows.oak_hollow": "Hueco de roble",
+  "block.treehollows.spruce_hollow": "Hueco de abeto",
+  "block.treehollows.birch_hollow": "Hueco de abedul",
+  "block.treehollows.jungle_hollow": "Hueco de jungla",
+  "block.treehollows.acacia_hollow": "Hueco de acacia",
+  "block.treehollows.dark_oak_hollow": "Hueco de roble oscuro",
+
+  "container.treehollows.tree_hollow": "Hueco de arbol",
+
+  "options.treehollows": "Configuración de Tree Hollows",
+  "options.treehollows.world_gen_chance": "Probabilidad durante generación del mundo",
+  "options.treehollows.growth_chance": "Probabilidad durante el crecimiento"
+}

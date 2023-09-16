@@ -1,0 +1,14 @@
+{
+  "block.treehollows.oak_hollow": "Дубовое дупло",
+  "block.treehollows.spruce_hollow": "Еловое дупло",
+  "block.treehollows.birch_hollow": "Берёзовое дупло",
+  "block.treehollows.jungle_hollow": "Тропическое дупло",
+  "block.treehollows.acacia_hollow": "Акациевое дупло",
+  "block.treehollows.dark_oak_hollow": "Темно-дубовое дупло",
+
+  "container.treehollows.tree_hollow": "Дупло",
+
+  "options.treehollows": "Опции Tree Hollows",
+  "options.treehollows.world_gen_chance": "Шанс генерации в мире",
+  "options.treehollows.growth_chance": "Шанс генерации при росте"
+}

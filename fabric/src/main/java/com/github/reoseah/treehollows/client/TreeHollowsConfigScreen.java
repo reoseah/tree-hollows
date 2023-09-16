@@ -1,10 +1,8 @@
 package com.github.reoseah.treehollows.client;
 
 import com.github.reoseah.treehollows.TreeHollowsConfig;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.client.gui.components.AbstractWidget;

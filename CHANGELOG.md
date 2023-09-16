@@ -1,5 +1,15 @@
 # Changelog
 
+## [3.1.0](https://github.com/reoseah/tree-hollows/compare/v3.0.1...v3.1.0) (2023-09-16)
+
+
+### Features
+
+* add Russian translation ([7a7829e](https://github.com/reoseah/tree-hollows/commit/7a7829ea69431b6dd2326a04a1890fb60b73e56b))
+* add Simplified Chinese translation by dust-shadows ([72496b7](https://github.com/reoseah/tree-hollows/commit/72496b7539915501eb2bcfab3435ed096a912bdd))
+* add Spanish (Spain) translation ([d78a171](https://github.com/reoseah/tree-hollows/commit/d78a171bd3a460c3298eeafbe675f590a84e9fd5))
+* add Ukrainian translation by Un roman ([72496b7](https://github.com/reoseah/tree-hollows/commit/72496b7539915501eb2bcfab3435ed096a912bdd))
+
 ## [3.0.1](https://github.com/reoseah/tree-hollows/compare/v3.0.0...v3.0.1) (2023-07-16)
 
 
